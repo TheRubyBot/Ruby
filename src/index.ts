@@ -1,6 +1,6 @@
-import 'dotenv/config';
-import { Bot } from './core/bot';
+import "dotenv/config";
+import { Bot } from "./core/bot";
 
 const bot: Bot = new Bot();
 
-bot.login(process.env['TOKEN']!);
+bot.login(process.env["TOKEN"]!);
