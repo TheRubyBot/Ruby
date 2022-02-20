@@ -12,4 +12,8 @@ switch (process.env["NODE_ENV"]) {
     break;
 }
 
-const bot = new Bot(process.env["TOKEN"]!);
+const bot = new Bot({
+  commandsDir: "commands",
+});
+
+bot.login(process.env["TOKEN"]!);
