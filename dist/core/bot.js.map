@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/core/bot.ts"],
+  "sourcesContent": ["import { PrismaClient } from \"@prisma/client\";\nimport { Client } from \"discord.js\";\nimport { readFileSync } from \"fs\";\n\nexport class Bot {\n  // Clients\n  public client: Client = new Client({\n    intents: [\"GUILDS\", \"GUILD_MESSAGES\", \"GUILD_MEMBERS\"]\n  });\n  public prisma: PrismaClient = new PrismaClient();\n\n  public version: { number: string; revision: number; codename: string };\n\n  constructor() {\n    this.client.on(\"ready\", () => console.log(`Logged in as ${this.client.user?.tag}`));\n\n    const pjson = JSON.parse(readFileSync(\"./package.json\", \"utf8\"));\n    this.version = {\n      number: pjson.version,\n      revision: pjson.revision,\n      codename: pjson.codename\n    };\n  }\n\n  public login(token: string): void {\n    this.client.login(token);\n  }\n}\n"],
+  "mappings": "8gBAAA,gCAA6B,0BAC7B,EAAuB,sBACvB,EAA6B,cAEtB,OAAU,CASf,aAAc,CAPP,YAAiB,GAAI,UAAO,CACjC,QAAS,CAAC,SAAU,iBAAkB,mBAEjC,YAAuB,GAAI,gBAKhC,KAAK,OAAO,GAAG,QAAS,IAAG,CAd/B,MAckC,eAAQ,IAAI,gBAAgB,QAAK,OAAO,OAAZ,cAAkB,SAE5E,KAAM,GAAQ,KAAK,MAAM,mBAAa,iBAAkB,SACxD,KAAK,QAAU,CACb,OAAQ,EAAM,QACd,SAAU,EAAM,SAChB,SAAU,EAAM,UAIb,MAAM,EAAqB,CAChC,KAAK,OAAO,MAAM",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/constructors/TextCommandConstructor.ts"],
+  "sourcesContent": ["import { Bot } from \"core/bot\";\nimport { Client } from \"discord.js\";\nimport { BaseCommand } from \"./BaseCommandConstructor\";\n\nexport type TextCommandCallback = (args: { client: Client; instance: Bot }) => void;\n\ninterface ITextCommandConfig {\n  name: string;\n  aliases?: string[];\n  description?: string;\n  callback: TextCommandCallback;\n}\n\nexport class TextCommand extends BaseCommand {\n  constructor(config: ITextCommandConfig) {\n    super(config.name, config.callback, config.description);\n  }\n}\n"],
+  "mappings": "8gBAAA,kCAEA,MAA4B,oCAWrB,eAA0B,cAAY,CAC3C,YAAY,EAA4B,CACtC,MAAM,EAAO,KAAM,EAAO,SAAU,EAAO",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/handlers/TextCommandHandler.ts"],
+  "sourcesContent": ["import { TextCommand } from \"core/constructors/TextCommandConstructor\";\n\nexport class TextCommandHandler {\n  readonly $commands: Map<string, TextCommand> = new Map();\n\n  constructor(commandFiles: string[]) {\n    (async () => {\n      for (const file of commandFiles) {\n        const command = await import(file);\n        if (!command.isSlash()) continue;\n        this.$commands.set(command.name, command);\n      }\n    })();\n  }\n\n  public get commands(): Map<string, TextCommand> {\n    return this.commands;\n  }\n\n  public getCommand(name: string): TextCommand | undefined {\n    return this.commands.get(name);\n  }\n}\n"],
+  "mappings": "2tBAAA,yCAEO,OAAyB,CAG9B,YAAY,EAAwB,CAF3B,eAAsC,GAAI,KAGjD,AAAa,wBACX,SAAW,KAAQ,GAAc,CAC/B,KAAM,GAAU,KAAM,QAAO,GAC7B,AAAI,CAAC,EAAQ,WACb,KAAK,UAAU,IAAI,EAAQ,KAAM,SAK5B,WAAqC,CAC9C,MAAO,MAAK,SAGP,WAAW,EAAuC,CACvD,MAAO,MAAK,SAAS,IAAI",
+  "names": []
+}

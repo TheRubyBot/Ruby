@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/constructors/ApplicationCommandConstructor.ts"],
+  "sourcesContent": ["import { Bot } from \"core/bot\";\nimport { Client, CommandInteraction } from \"discord.js\";\nimport { BaseCommand } from \"./BaseCommandConstructor\";\n\nexport type ApplicationCommandCallback = (args: {\n  client: Client;\n  instance: Bot;\n  interaction: CommandInteraction;\n}) => void;\n\nexport class ApplicationCommand extends BaseCommand {\n  public type = 1;\n\n  constructor(name: string, description: string, callback: ApplicationCommandCallback) {\n    super(name, callback, description);\n  }\n}\n"],
+  "mappings": "8gBAAA,yCAEA,MAA4B,oCAQrB,eAAiC,cAAY,CAGlD,YAAY,EAAc,EAAqB,EAAsC,CACnF,MAAM,EAAM,EAAU,GAHjB,UAAO",
+  "names": []
+}
