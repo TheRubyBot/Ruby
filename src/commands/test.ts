@@ -1,10 +1,9 @@
-import { SlashCommand } from "rubycommands";
+import { ApplicationCommand } from "@constructors/ApplicationCommandConstructor";
 
-export = new SlashCommand(
+export = new ApplicationCommand(
   "test",
   "This is a test command",
-  [],
   ({ interaction: i }) => {
-    i.reply("Hello, world!");
+    i.reply("This is a test command");
   }
 );
