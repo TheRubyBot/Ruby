@@ -14,10 +14,19 @@
     "url": "https://morganuk.ga"
   },
   "license": "MIT",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "build:dev": "node ./scripts/build.mjs --dev",
+    "watch": "node ./scripts/watch.mjs",
+    "watch:dev": "node ./scripts/watch.mjs --dev"
+  },
   "devDependencies": {
     "@types/node": "^17.0.18",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
+    "chalk": "^5.0.0",
+    "chokidar": "^3.5.3",
+    "esbuild": "^0.14.23",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-prettier": "^4.0.0",
