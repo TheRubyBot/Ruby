@@ -4,7 +4,7 @@ import { Client } from "discord.js";
 export class Bot {
   // Clients
   public client: Client = new Client({
-    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"],
+    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"]
   });
   public prisma: PrismaClient = new PrismaClient();
 
