@@ -37,7 +37,6 @@ rules:
   "@typescript-eslint/no-meaningless-void-operator": error
   "@typescript-eslint/no-misused-new": error
   "@typescript-eslint/no-require-imports": error
-  "@typescript-eslint/no-type-alias": error
   "@typescript-eslint/no-unnecessary-condition": error
   "@typescript-eslint/prefer-for-of": warn
   "@typescript-eslint/prefer-readonly": error
