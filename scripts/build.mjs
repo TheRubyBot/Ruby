@@ -1,8 +1,9 @@
 import { readDir } from "./readDir.mjs"
 import { build as esbuild } from "esbuild"
 import chalk from "chalk";
+import { incrementRevision } from "./incrementRevision.mjs";
 
-export const build = async (returnStartTime) => {
+export const build = async (returnStartTime, incRev) => {
   const start = Date.now();
   const allFiles = readDir("./src");
 
@@ -14,6 +15,8 @@ export const build = async (returnStartTime) => {
     platform: "node",
     sourcemap: true,
   })
+
+  if (incRev) incrementRevision()
 
   if (returnStartTime) return start
   console.log(chalk.bgGreen.black.bold(" BUILD COMPLETE ") + ` ${(Date.now() - start)}ms`)
