@@ -5,3 +5,6 @@ node_modules/
 **/supabase/.branches
 **/supabase/.temp
 **/supabase/.env
+
+# Yarn
+yarn-error.lock
