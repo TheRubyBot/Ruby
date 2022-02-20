@@ -43,9 +43,9 @@ rules:
   "@typescript-eslint/prefer-string-starts-ends-with": error
   "@typescript-eslint/prefer-ts-expect-error": error
   "@typescript-eslint/semi": [error, "always"]
+  '@typescript-eslint/indent': [error, 2, { SwitchCase: 0 }]
 
   # Built in
-  indent: [error, 2, { SwitchCase: 0 }]
   linebreak-style: [error, "unix"]
   quotes: [error, "double"]
   no-constructor-return: error
