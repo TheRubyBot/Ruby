@@ -4,6 +4,7 @@
   "private": true,
   "version": "1.0.0",
   "revision": 0,
+  "codename": "Titanium",
   "main": "dist/index.js",
   "repository": "https://github.com/TheRubyBot/Ruby",
   "homepage": "https://github.com/TheRubyBot/Ruby#readme",
