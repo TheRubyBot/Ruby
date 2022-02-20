@@ -19,7 +19,9 @@ export const build = async (returnStartTime, incRev) => {
   if (incRev) incrementRevision()
 
   if (returnStartTime) return start
-  console.log(chalk.bgGreen.black.bold(" BUILD COMPLETE ") + ` ${(Date.now() - start)}ms`)
+  else console.log(chalk.bgGreen.black.bold(" BUILD COMPLETE ") + ` ${(Date.now() - start)}ms`)
 }
 
-build();
+// Stop the function from being called twice if it's imported into another file like watch.mjs
+// However it still runs if ran directly from the command line
+if (import.meta.url === `file://${process.argv[1]}`) build();
