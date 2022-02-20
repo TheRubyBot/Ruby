@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { join } from "path";
 import { Client } from "discord.js";
-import { ApplicationCommandHandler } from "./handlers/ApplicationCommandHandler";
 import { RubyError } from "./util/Error";
 import { readDir } from "./util/readDir";
 
@@ -17,9 +16,6 @@ export class Bot {
   public client: Client = new Client({
     intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS"],
   });
-
-  public applicationCommands: ApplicationCommandHandler;
-  // public TextCommands: Map<string, TextCommand> = new Map();
 
   public commandsDir: string;
 
@@ -45,11 +41,6 @@ export class Bot {
     }
 
     const commandFiles = readDir(this.commandsDir, { ignoreDot: true });
-
-    this.applicationCommands = new ApplicationCommandHandler(
-      this.client,
-      commandFiles
-    );
   }
 
   public login(token: string) {
