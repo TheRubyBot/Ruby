@@ -25,3 +25,6 @@ core:
     EventHandlerConstructor.ts:
       - Handles on-the-spot type checking
       - Looks better than client.on("name", () => {}) by converting it to new Event("name", () => {})
+    OptionBuilderConstructor.ts:
+      - Creates options that adhere to discord's option structure
+      - Chains the options together with new OptionBuilder().type("", "").type2("", "").etc()
