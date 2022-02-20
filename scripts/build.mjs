@@ -22,6 +22,7 @@ export const build = () => {
     outfile: "./dist/index.js",
     tsconfig: "tsconfig.json",
     platform: "node",
+    sourcemap: true,
   });
 
   console.log(greenTag(`Built`) + `${Date.now() - start}ms`);
