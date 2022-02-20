@@ -1,0 +1,66 @@
+env:
+  browser: true
+  es2021: true
+
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+
+parser: '@typescript-eslint/parser'
+
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+
+plugins:
+  - '@typescript-eslint'
+
+rules:
+  indent:
+    - error
+    - 2
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - double
+  semi:
+    - error
+    - always
+  no-constructor-return: error
+  no-unused-vars:
+    - error
+    - args
+  no-unreachable-loop: error
+  no-unused-private-class-members: error
+  arrow-body-style:
+    - error
+    - as-needed
+  capitalized-comments:
+    - error
+    - always
+  curly:
+    - error
+    - multi
+  default-case-last: error
+  func-style:
+    - error
+    - expression
+    - {
+      allowArrowFunctions: true
+    }
+  no-confusing-arrow: error
+  no-lonely-if: warn
+  no-regex-spaces: warn
+  no-var: error
+  prefer-const: warn
+  comma-dangle:
+    - always-multiline
+    - warn
+  comma-spacing:
+    - error
+    - {
+      before: false,
+      after: true
+    }
