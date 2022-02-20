@@ -61,7 +61,7 @@ rules:
   no-regex-spaces: warn
   no-var: error
   prefer-const: warn
-  comma-dangle: [warn, "always-multiline"]
+  comma-dangle: [warn, "never"]
   comma-spacing: [error, { before: false, after: true }]
  
   # Disabled
