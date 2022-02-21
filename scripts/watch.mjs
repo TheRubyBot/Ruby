@@ -1,4 +1,5 @@
 import chalk from "chalk"
+import { spawnSync } from "child_process"
 import { watch } from "chokidar"
 import { buildSingleFile, rebuildWholeSrcFolder } from "./build.mjs"
 import { tag } from "./util/createTag.mjs"
@@ -23,6 +24,7 @@ watch("./src/**/*.ts", { ignoreInitial: true })
         const { startedAt } = await buildSingleFile(pa, {})
         const eventTag = greenTag(ev, `Built in ${Date.now() - startedAt}ms`)
         console.log(eventTag)
+        break;
     }
   })
 
@@ -33,39 +35,15 @@ watch("./prisma/**/*.prisma", { ignoreInitial: true })
     console.log(startedTag)
   })
   .on("all", (ev, pa) => {
-    console.log(ev, pa)
+    switch (ev) {
+      case "add":
+      case "change":
+        const generatedTag = greenTag("Generated", "Generated Prisma schema")
+        console.log(generatedTag)
+        spawnSync("prisma", ["generate"], { stdio: "inherit" });
+        break;
+    }
   })
-
-// import { watch } from "chokidar"
-// import chalk from "chalk"
-// import { build } from "./build.mjs"
-// import { incrementRevision } from "./incrementRevision.mjs"
-// import { spawnSync } from "child_process"
-// import { start } from "./start.mjs"
-// watch("src/**/*.ts", { ignoreInitial: true })
-//   .on("ready", async() => {
-//     await build(false, false)
-//     console.log(greenTag("Ready", "Watching for changes..."))
-//     p = start()
-// })
-//   .on("all", async (ev, pa) => {
-//     console.log(ev, pa)
-//     switch(ev) {
-//       case "add":
-//       case "change":
-//         console.log(greenTag("Change", `${pa}`));
-//         const startTime = await build(true, false, true);
-//         const pjson = incrementRevision();
-
-//         if (p) p.kill()
-//         p = start();
-        
-//         console.log(greenTag("Change", `Revision ${pjson.revision} - Built in ${Date.now() - startTime}ms`));
-//         break
-//       default:
-//         console.log(greenTag(ev, pa));
-//     }
-//   })
 
 // // Watch for changes to prisma schema and generate new schema
 // watch("prisma", { ignoreInitial: true })
