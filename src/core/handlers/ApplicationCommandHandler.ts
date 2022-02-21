@@ -14,7 +14,6 @@ export class ApplciationCommandHandler {
     const rest = new REST({ version: "10" }).setToken(i.client.token!);
 
     (async () => {
-      console.log(i.testServers);
       if (i.globalSlashTesting)
         for (const server of i.testServers)
           await rest.put(Routes.applicationGuildCommands(i.client.user!.id, server), { body: configs });
