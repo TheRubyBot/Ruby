@@ -6,7 +6,7 @@ const bot: Bot = new Bot({
   owners: ["796336114113183746"],
   testServers: ["876649337659215976"],
   prefixes: ["."],
-  globalSlashTesting: true
+  globalSlashTesting: process.env["NODE_ENV"] === "DEVELOPMENT"
 });
 
 bot.login(process.env["TOKEN"]!);

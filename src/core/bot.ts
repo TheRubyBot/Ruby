@@ -82,6 +82,10 @@ export class Bot {
     });
   }
 
+  public isDev(): boolean {
+    return process.env["NODE_ENV"] === "DEVELOPMENT";
+  }
+
   public login(token: string): void {
     this.client.login(token);
   }

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/commands/test.ts"],
-  "sourcesContent": ["import { ApplicationCommand } from \"../core/constructors/ApplicationCommandConstructor\";\n\nexport = new ApplicationCommand(\n  \"newtest\",\n  \"This is a test command with description, cool!\",\n  [],\n  ({ interaction: i }) => {\n    i.reply(\"hola\");\n  }\n);\n"],
-  "mappings": "AAAA,MAAmC,8DAEnC,eAAS,GAAI,sBACX,UACA,iDACA,GACA,CAAC,CAAE,YAAa,KAAQ,CACtB,EAAE,MAAM",
-  "names": []
-}

@@ -28,7 +28,8 @@ rules:
     { selector: "default", format: ["camelCase"] },
     { selector: "variable", format: ["camelCase", "UPPER_CASE"] },
     { selector: "typeLike", format: ["PascalCase" ]},
-    { selector: "class", format: ["PascalCase" ]}
+    { selector: "class", format: ["PascalCase" ]},
+    { selector: "object", format: ["camelCase", "snake_case"] }
   ]
   "@typescript-eslint/no-base-to-string": error
   "@typescript-eslint/no-explicit-any": [error, { ignoreRestArgs: true, fixToUnknown: true }]
