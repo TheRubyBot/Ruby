@@ -1,51 +1,26 @@
-import { watch } from "chokidar"
+// TODO: Rewrite/refactor all of this
+
 import chalk from "chalk"
-import { build } from "./build.mjs"
-import { incrementRevision } from "./incrementRevision.mjs"
-import { spawnSync } from "child_process"
-import { start } from "./start.mjs"
+import { watch } from "chokidar"
 
-const greenTag = (label, text) => chalk.bgGreen.black.bold(` ${label.toUpperCase()} `) + ` ${text}`
-let proc;
+// Create a Tag easily
+const tag = (background, foreground, labelText, followingText) => {
+  background = `bg${background[0].toUpperCase()}${background.substring(1)}`
+  const chalkText = chalk[background][foreground].bold(` ${labelText.toUpperCase()} `) + " "
 
-const killBot = () => { if (proc) proc.kill() }
+  return chalkText + followingText
+}
 
-watch("./src", { ignoreInitial: true })
-  .on("ready", async() => {
-    await build(false, false)
-    console.log(greenTag("Ready", "Watching for changes..."))
-    proc = start()
+const greenTag = (labelText, followingText) => tag("green", "white", labelText, followingText)
+
+// Watch for changes to /src
+watch("./src/**/*.ts").on("ready", () => {
+  const startedTag = greenTag("Ready", "Waiting for changes to ./src/");
+  console.log(startedTag)
 })
-  .on("all", async (ev, pa) => {
-    switch(ev) {
-      case "add":
-      case "change":
-        console.log(greenTag("Change", `${pa}`));
-        const start = await build(true, false, true);
-        const pjson = incrementRevision();
 
-        killBot();
-        proc = start();
-        
-        console.log(greenTag("Change", `Revision ${pjson.revision} - Built in ${Date.now() - start}ms`));
-        break
-      default:
-        console.log(greenTag(ev, pa));
-    }
-  })
-
-// Watch for changes to prisma schema and generate new schema
-watch("./prisma", { ignoreInitial: true })
-  .on("all", (ev, pa) => {
-    switch(ev) {
-    case "add":
-    case "change":
-      console.log(greenTag("Schema", `Updated`));
-      spawnSync("prisma", ["generate"], { stdio: "inherit" })
-        killBot();
-        proc = start();
-      break
-    default:
-      console.log(greenTag(ev, pa));
-  }
+// Watch for changes to /prisma
+watch("./prisma/**/*.prisma").on("ready", () => {
+  const startedTag = greenTag("Ready", "Waiting for changes to ./prisma/")
+  console.log(startedTag)
 })
