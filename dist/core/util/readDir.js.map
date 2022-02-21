@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/util/readDir.ts"],
+  "sourcesContent": ["import { readdirSync } from \"fs\";\nimport { join, resolve } from \"path/posix\";\n\ninterface IReadDirConfig {\n  ignoreDot: boolean;\n}\n\nexport const readDir = (path: string, config: IReadDirConfig): string[] => {\n  const files = readdirSync(path, { withFileTypes: true }).filter(\n    (file) => config.ignoreDot && !file.name.startsWith(\".\")\n  );\n  let result: string[] = [];\n\n  for (const file of files)\n    if (file.isDirectory()) result = [...result, ...readDir(resolve(join(path, file.name)), config)];\n    else result.push(resolve(join(path, file.name)));\n\n  return result;\n};\n"],
+  "mappings": "8gBAAA,oCAA4B,cAC5B,EAA8B,sBAMvB,KAAM,GAAU,CAAC,EAAc,IAAqC,CACzE,KAAM,GAAQ,kBAAY,EAAM,CAAE,cAAe,KAAQ,OACvD,AAAC,GAAS,EAAO,WAAa,CAAC,EAAK,KAAK,WAAW,MAEtD,GAAI,GAAmB,GAEvB,SAAW,KAAQ,GACjB,AAAI,EAAK,cAAe,EAAS,CAAC,GAAG,EAAQ,GAAG,EAAQ,cAAQ,WAAK,EAAM,EAAK,OAAQ,IACnF,EAAO,KAAK,cAAQ,WAAK,EAAM,EAAK,QAE3C,MAAO",
+  "names": []
+}

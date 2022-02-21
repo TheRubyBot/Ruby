@@ -2,6 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import { Client } from "discord.js";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { ApplciationCommandHandler } from "./handlers/ApplicationCommandHandler";
+import { TextCommandHandler } from "./handlers/TextCommandHandler";
+import { readDir } from "./util/readDir";
 
 interface IBotConfig {
   commandsDir: string;
@@ -24,6 +27,11 @@ export class Bot {
   public owners: string[] = [];
   public testServers: string[] = [];
   public prefixes: string[] = [];
+
+  // Handlers
+  private readonly $applicationCommandHandler: ApplciationCommandHandler;
+  // Private readonly $eventHandler: EventHandler;
+  // Private readonly $textCommandHandler: TextCommandHandler;
 
   constructor(config: IBotConfig) {
     this.client.on("ready", () => {
@@ -60,6 +68,10 @@ export class Bot {
 
       if (path) this.commandsDir = join(path, this.commandsDir);
     }
+
+    const commandFiles = readDir(this.commandsDir, { ignoreDot: true });
+
+    this.$applicationCommandHandler = new ApplciationCommandHandler(commandFiles);
   }
 
   public login(token: string): void {
