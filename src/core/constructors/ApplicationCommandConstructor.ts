@@ -15,7 +15,7 @@ export class ApplicationCommand extends BaseCommand {
     name: string,
     description: string,
     // TODO: Make OptionBuilder and proper option types
-    options: Record<string, unknown>[],
+    public options: Record<string, unknown>[],
     callback: ApplicationCommandCallback
   ) {
     super(name, true, callback, description);

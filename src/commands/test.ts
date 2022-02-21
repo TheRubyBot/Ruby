@@ -1,3 +1,10 @@
 import { ApplicationCommand } from "../core/constructors/ApplicationCommandConstructor";
 
-export = new ApplicationCommand("test", "This is a test command with description, cool!", [], () => {});
+export = new ApplicationCommand(
+  "newtest",
+  "This is a test command with description, cool!",
+  [],
+  ({ interaction: i }) => {
+    i.reply("hola");
+  }
+);

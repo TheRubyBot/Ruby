@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../../src/core/constructors/ApplicationCommandConstructor.ts"],
-  "sourcesContent": ["import { Bot } from \"core/bot\";\nimport { Client, CommandInteraction } from \"discord.js\";\nimport { BaseCommand } from \"./BaseCommandConstructor\";\n\nexport type ApplicationCommandCallback = (args: {\n  client: Client;\n  instance: Bot;\n  interaction: CommandInteraction;\n}) => void;\n\nexport class ApplicationCommand extends BaseCommand {\n  public type = 1;\n\n  constructor(\n    name: string,\n    description: string,\n    // TODO: Make OptionBuilder and proper option types\n    options: Record<string, unknown>[],\n    callback: ApplicationCommandCallback\n  ) {\n    super(name, true, callback, description);\n  }\n}\n"],
-  "mappings": "8gBAAA,yCAEA,MAA4B,oCAQrB,eAAiC,cAAY,CAGlD,YACE,EACA,EAEA,EACA,EACA,CACA,MAAM,EAAM,GAAM,EAAU,GATvB,UAAO",
+  "sourcesContent": ["import { Bot } from \"core/bot\";\nimport { Client, CommandInteraction } from \"discord.js\";\nimport { BaseCommand } from \"./BaseCommandConstructor\";\n\nexport type ApplicationCommandCallback = (args: {\n  client: Client;\n  instance: Bot;\n  interaction: CommandInteraction;\n}) => void;\n\nexport class ApplicationCommand extends BaseCommand {\n  public type = 1;\n\n  constructor(\n    name: string,\n    description: string,\n    // TODO: Make OptionBuilder and proper option types\n    public options: Record<string, unknown>[],\n    callback: ApplicationCommandCallback\n  ) {\n    super(name, true, callback, description);\n  }\n}\n"],
+  "mappings": "8gBAAA,yCAEA,MAA4B,oCAQrB,eAAiC,cAAY,CAGlD,YACE,EACA,EAEO,EACP,EACA,CACA,MAAM,EAAM,GAAM,EAAU,GAHrB,eANF,UAAO",
   "names": []
 }

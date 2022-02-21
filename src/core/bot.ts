@@ -12,6 +12,7 @@ interface IBotConfig {
   owners: string[];
   testServers: string[];
   prefixes: string[];
+  globalSlashTesting: boolean;
 }
 
 export class Bot {
@@ -28,20 +29,14 @@ export class Bot {
   public owners: string[] = [];
   public testServers: string[] = [];
   public prefixes: string[] = [];
+  public globalSlashTesting = false;
 
   // Handlers
-  private $applicationCommandHandler: ApplciationCommandHandler;
+  private $applicationCommandHandler: ApplciationCommandHandler | undefined;
   // Private readonly $eventHandler: EventHandler;
   // Private readonly $textCommandHandler: TextCommandHandler;
 
   constructor(config: IBotConfig) {
-    this.client.on("ready", () => {
-      console.log(`Logged in as ${this.client.user?.tag}`);
-
-      this.prefixes.push(`<@${this.client.user?.id}>`);
-      this.prefixes.push(`<@!${this.client.user?.id}>`);
-    });
-
     const pjson = JSON.parse(readFileSync("./package.json", "utf8"));
     this.version = {
       number: pjson.version,
@@ -49,20 +44,23 @@ export class Bot {
       codename: pjson.codename
     };
 
-    const { commandsDir, owners, prefixes, testServers } = config;
+    const { commandsDir, owners, prefixes, testServers, globalSlashTesting } = config;
 
     this.commandsDir = commandsDir;
     this.prefixes = prefixes;
+    this.globalSlashTesting = globalSlashTesting;
 
     for (const owner of owners)
       this.client.users.fetch(owner).catch(() => {
         throw new Error(`Owner: ${owner} cannot be seen by bot`);
       });
+    this.owners = owners;
 
     for (const testServer of testServers)
       this.client.guilds.fetch(testServer).catch(() => {
         throw new Error(`Test server: ${testServer} cannot be seen by bot`);
       });
+    this.testServers = testServers;
 
     if (require.main) {
       const { path } = require.main;
@@ -70,11 +68,18 @@ export class Bot {
       if (path) this.commandsDir = join(path, this.commandsDir);
     }
 
-    const commandFiles = readDir(this.commandsDir, { ignoreDot: true }).filter((file) => file.endsWith(".js"));
+    this.client.on("ready", () => {
+      console.log(`Logged in as ${this.client.user?.tag}`);
 
-    const seperated = this.seperateCommands(commandFiles);
+      this.prefixes.push(`<@${this.client.user?.id}>`);
+      this.prefixes.push(`<@!${this.client.user?.id}>`);
 
-    this.$applicationCommandHandler = seperated.applicationCommandHandler;
+      const commandFiles = readDir(this.commandsDir, { ignoreDot: true }).filter((file) => file.endsWith(".js"));
+
+      const seperated = this.seperateCommands(commandFiles);
+
+      this.$applicationCommandHandler = seperated.applicationCommandHandler;
+    });
   }
 
   public login(token: string): void {
@@ -97,7 +102,7 @@ export class Bot {
     }
 
     return {
-      applicationCommandHandler: (this.$applicationCommandHandler = new ApplciationCommandHandler(applicationCommands))
+      applicationCommandHandler: new ApplciationCommandHandler(applicationCommands, this)
     };
   }
 }

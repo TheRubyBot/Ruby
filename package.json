@@ -3,7 +3,7 @@
   "description": "Remember to put a description here before final release kthxbye",
   "private": true,
   "version": "1.0.0",
-  "revision": 35,
+  "revision": 61,
   "codename": "Titanium",
   "main": "dist/index.js",
   "repository": "https://github.com/TheRubyBot/Ruby",
@@ -36,7 +36,9 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@discordjs/rest": "^0.3.0",
     "@prisma/client": "^3.9.2",
+    "discord-api-types": "^0.27.2",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "prisma": "^3.9.2"
