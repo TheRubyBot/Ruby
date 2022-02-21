@@ -2,6 +2,7 @@ import { spawnSync, spawn } from "child_process"
 import { watch } from "chokidar"
 import { buildSingleFile, rebuildWholeSrcFolder } from "./build.mjs"
 import { tag } from "./util/createTag.mjs"
+import { incrementRevision } from "./util/incrementRevision.mjs"
 
 const greenTag = (labelText, followingText) => tag("green", "black", labelText, followingText)
 
@@ -30,6 +31,7 @@ watch("./src/**/*.ts", { ignoreInitial: true })
       case "add":
       case "change":
         const { startedAt } = await buildSingleFile(pa, {})
+        incrementRevision();
         const eventTag = greenTag(ev, `Built in ${Date.now() - startedAt}ms`)
         console.log(eventTag)
 
@@ -50,10 +52,11 @@ watch("./prisma/**/*.prisma", { ignoreInitial: true })
     switch (ev) {
       case "add":
       case "change":
+        incrementRevision();
+        spawnSync("prisma", ["generate"], { stdio: "inherit" });
         const generatedTag = greenTag("Generated", "Generated Prisma schema")
         console.log(generatedTag)
-        spawnSync("prisma", ["generate"], { stdio: "inherit" });
-
+        
         // Kill & start the bot
         if (bot) bot.kill();
         bot = await startBot();
