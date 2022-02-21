@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/commands/test.ts"],
+  "sourcesContent": ["console.log(\"E-A-Sports. It's in the game!\");\n"],
+  "mappings": "AAAA,QAAQ,IAAI",
+  "names": []
+}

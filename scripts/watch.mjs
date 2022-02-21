@@ -1,10 +1,15 @@
-import chalk from "chalk"
-import { spawnSync } from "child_process"
+import { spawnSync, spawn } from "child_process"
 import { watch } from "chokidar"
 import { buildSingleFile, rebuildWholeSrcFolder } from "./build.mjs"
 import { tag } from "./util/createTag.mjs"
 
 const greenTag = (labelText, followingText) => tag("green", "black", labelText, followingText)
+
+let bot;
+
+const [,,...args] = process.argv
+
+const startBot = () => spawn("node", ["dist"], { stdio: "inherit", env: { ...process.env, NODE_ENV: args.includes("--dev") ? "DEVELOPMENT" : "PRODUCTION" } })
 
 // Watch for changes to /src
 watch("./src/**/*.ts", { ignoreInitial: true })
@@ -16,6 +21,9 @@ watch("./src/**/*.ts", { ignoreInitial: true })
 
     const startedTag = greenTag("Ready", "Waiting for changes to ./src/");
     console.log(startedTag)
+
+    // Start the bot
+    bot = startBot();
   })
   .on("all", async (ev, pa) => {
     switch(ev) {
@@ -24,6 +32,10 @@ watch("./src/**/*.ts", { ignoreInitial: true })
         const { startedAt } = await buildSingleFile(pa, {})
         const eventTag = greenTag(ev, `Built in ${Date.now() - startedAt}ms`)
         console.log(eventTag)
+
+        // Kill & start the bot
+        if (bot) bot.kill()
+        bot = await startBot();
         break;
     }
   })
@@ -34,13 +46,17 @@ watch("./prisma/**/*.prisma", { ignoreInitial: true })
     const startedTag = greenTag("Ready", "Waiting for changes to ./prisma/")
     console.log(startedTag)
   })
-  .on("all", (ev, pa) => {
+  .on("all", async (ev, pa) => {
     switch (ev) {
       case "add":
       case "change":
         const generatedTag = greenTag("Generated", "Generated Prisma schema")
         console.log(generatedTag)
         spawnSync("prisma", ["generate"], { stdio: "inherit" });
+
+        // Kill & start the bot
+        if (bot) bot.kill();
+        bot = await startBot();
         break;
     }
   })
