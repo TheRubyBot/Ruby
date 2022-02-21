@@ -1,22 +1,12 @@
 import { ApplicationCommand } from "../../core/constructors/ApplicationCommandConstructor";
 
 export class ApplciationCommandHandler {
-  readonly $commands: Map<string, ApplicationCommand> = new Map();
+  readonly $commands: Map<string, ApplicationCommand>;
 
-  constructor(commandFiles: string[]) {
-    (async () => {
-      for (const file of commandFiles) {
-        const command = await import(file);
+  constructor(commandFiles: ApplicationCommand[]) {
+    commandFiles.map(({ name, type, description, callback }) => ({ name, type, description, callback }));
 
-        if (!(command instanceof ApplicationCommand))
-          throw new Error(
-            `Command ${file} is not an ApplicationCommand or TextCommand.\nPro tip: Ignore files by prefixing their name with a dot (.`
-          );
-
-        if (!command.isSlash()) continue;
-        this.$commands.set(command.name, command);
-      }
-    })();
+    this.$commands = new Map(commandFiles.map((x) => [x.name, x]));
   }
 
   public get commands(): Map<string, ApplicationCommand> {

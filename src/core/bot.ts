@@ -30,7 +30,7 @@ export class Bot {
   public prefixes: string[] = [];
 
   // Handlers
-  // Private readonly $applicationCommandHandler: ApplciationCommandHandler;
+  private $applicationCommandHandler: ApplciationCommandHandler;
   // Private readonly $eventHandler: EventHandler;
   // Private readonly $textCommandHandler: TextCommandHandler;
 
@@ -72,25 +72,22 @@ export class Bot {
 
     const commandFiles = readDir(this.commandsDir, { ignoreDot: true }).filter((file) => file.endsWith(".js"));
 
-    (async () => {
-      const { applicationCommands, textCommands } = await this.seperateCommands(commandFiles);
+    const seperated = this.seperateCommands(commandFiles);
 
-      console.log(applicationCommands, textCommands);
-    })();
+    this.$applicationCommandHandler = seperated.applicationCommandHandler;
   }
 
   public login(token: string): void {
     this.client.login(token);
   }
 
-  private async seperateCommands(
-    commandFiles: string[]
-  ): Promise<{ applicationCommands: ApplicationCommand[]; textCommands: TextCommand[] }> {
+  private seperateCommands(commandFiles: string[]): { applicationCommandHandler: ApplciationCommandHandler } {
     const applicationCommands: ApplicationCommand[] = [];
     const textCommands: TextCommand[] = [];
 
     for (const file of commandFiles) {
-      let imported = await import(file);
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+      let imported = require(file);
 
       if (imported.command) imported = imported.command;
       else if (imported.default) imported = imported.default;
@@ -99,6 +96,8 @@ export class Bot {
       else if (imported.isText()) textCommands.push(imported);
     }
 
-    return { applicationCommands, textCommands };
+    return {
+      applicationCommandHandler: (this.$applicationCommandHandler = new ApplciationCommandHandler(applicationCommands))
+    };
   }
 }
