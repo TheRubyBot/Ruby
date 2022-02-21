@@ -2,8 +2,9 @@ import { readDir } from "./readDir.mjs"
 import { build as esbuild } from "esbuild"
 import chalk from "chalk";
 import { incrementRevision } from "./incrementRevision.mjs";
+import { spawnSync } from "child_process";
 
-export const build = async (returnStartTime, incRev) => {
+export const build = async (returnStartTime, incRev, ignorePrisma) => {
   const start = Date.now();
   const allFiles = readDir("./src");
 
@@ -17,6 +18,8 @@ export const build = async (returnStartTime, incRev) => {
   })
 
   if (incRev) incrementRevision()
+
+  if(!ignorePrisma) await spawnSync("prisma", ["generate"], { stdio: "inherit" })
 
   if (returnStartTime) return start
   else console.log(chalk.bgGreen.black.bold(" BUILD COMPLETE ") + ` ${(Date.now() - start)}ms`)
