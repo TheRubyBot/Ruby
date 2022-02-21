@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../src/commands/test.ts"],
-  "sourcesContent": ["console.log(\"E-A-Sports. It's in the game!\");\n"],
-  "mappings": "AAAA,QAAQ,IAAI",
+  "sourcesContent": ["import { ApplicationCommand } from \"../core/constructors/ApplicationCommandConstructor\";\n\nexport = new ApplicationCommand(\"test\", \"This is a test command with description, cool!\", [], () => {});\n"],
+  "mappings": "AAAA,MAAmC,8DAEnC,eAAS,GAAI,sBAAmB,OAAQ,iDAAkD,GAAI,IAAM",
   "names": []
 }

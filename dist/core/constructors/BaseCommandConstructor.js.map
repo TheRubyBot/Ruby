@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../../src/core/constructors/BaseCommandConstructor.ts"],
-  "sourcesContent": ["import { ApplicationCommandCallback } from \"./ApplicationCommandConstructor\";\nimport { TextCommandCallback } from \"./TextCommandConstructor\";\n\nexport class BaseCommand {\n  constructor(\n    public name: string,\n    public callback: ApplicationCommandCallback | TextCommandCallback,\n    public description?: string\n  ) {}\n}\n"],
-  "mappings": "8gBAAA,kCAGO,OAAkB,CACvB,YACS,EACA,EACA,EACP,CAHO,YACA,gBACA",
+  "sourcesContent": ["import { ApplicationCommandCallback } from \"./ApplicationCommandConstructor\";\nimport { TextCommandCallback } from \"./TextCommandConstructor\";\n\nexport class BaseCommand {\n  constructor(\n    public name: string,\n    public $isSlash: boolean,\n    public callback: ApplicationCommandCallback | TextCommandCallback,\n    public description?: string\n  ) {}\n\n  public isSlash(): boolean {\n    return this.$isSlash;\n  }\n\n  public isText(): boolean {\n    return !this.$isSlash;\n  }\n}\n"],
+  "mappings": "8gBAAA,kCAGO,OAAkB,CACvB,YACS,EACA,EACA,EACA,EACP,CAJO,YACA,gBACA,gBACA,mBAGF,SAAmB,CACxB,MAAO,MAAK,SAGP,QAAkB,CACvB,MAAO,CAAC,KAAK",
   "names": []
 }

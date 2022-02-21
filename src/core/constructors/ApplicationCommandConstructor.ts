@@ -11,7 +11,13 @@ export type ApplicationCommandCallback = (args: {
 export class ApplicationCommand extends BaseCommand {
   public type = 1;
 
-  constructor(name: string, description: string, callback: ApplicationCommandCallback) {
-    super(name, callback, description);
+  constructor(
+    name: string,
+    description: string,
+    // TODO: Make OptionBuilder and proper option types
+    options: Record<string, unknown>[],
+    callback: ApplicationCommandCallback
+  ) {
+    super(name, true, callback, description);
   }
 }

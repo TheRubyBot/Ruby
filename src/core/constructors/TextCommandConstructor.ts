@@ -13,6 +13,6 @@ interface ITextCommandConfig {
 
 export class TextCommand extends BaseCommand {
   constructor(config: ITextCommandConfig) {
-    super(config.name, config.callback, config.description);
+    super(config.name, false, config.callback, config.description);
   }
 }
