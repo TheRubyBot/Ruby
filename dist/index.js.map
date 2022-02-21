@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../src/index.ts"],
-  "sourcesContent": ["import \"dotenv/config\";\nimport { Bot } from \"./core/bot\";\n\nconst bot: Bot = new Bot();\n\nbot.login(process.env[\"TOKEN\"]!);\n"],
-  "mappings": "AAAA,MAAO,yBACP,EAAoB,sBAEpB,KAAM,GAAW,GAAI,OAErB,EAAI,MAAM,QAAQ,IAAI",
+  "sourcesContent": ["import \"dotenv/config\";\nimport { Bot } from \"./core/bot\";\n\nconst bot: Bot = new Bot({\n  commandsDir: \"commands\",\n  owners: [\"796336114113183746\"],\n  testServers: [\"876649337659215976\"],\n  prefixes: [\".\"]\n});\n\nbot.login(process.env[\"TOKEN\"]!);\n"],
+  "mappings": "AAAA,MAAO,yBACP,EAAoB,sBAEpB,KAAM,GAAW,GAAI,OAAI,CACvB,YAAa,WACb,OAAQ,CAAC,sBACT,YAAa,CAAC,sBACd,SAAU,CAAC,OAGb,EAAI,MAAM,QAAQ,IAAI",
   "names": []
 }

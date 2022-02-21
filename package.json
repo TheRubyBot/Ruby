@@ -3,7 +3,7 @@
   "description": "Remember to put a description here before final release kthxbye",
   "private": true,
   "version": "1.0.0",
-  "revision": 0,
+  "revision": 11,
   "codename": "Titanium",
   "main": "dist/index.js",
   "repository": "https://github.com/TheRubyBot/Ruby",
