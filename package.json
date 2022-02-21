@@ -18,7 +18,9 @@
     "build": "node ./scripts/build.mjs",
     "build:dev": "node ./scripts/build.mjs --dev",
     "watch": "node ./scripts/watch.mjs",
-    "watch:dev": "node ./scripts/watch.mjs --dev"
+    "watch:dev": "node ./scripts/watch.mjs --dev",
+    "start": "node ./scripts/start.mjs",
+    "start:dev": "node ./scripts/start.mjs --dev"
   },
   "devDependencies": {
     "@types/node": "^17.0.18",
