@@ -1,7 +1,7 @@
-import { spawn } from "child_process"
+import { spawnSync } from "child_process"
 
 export const start = (dev) => {
-  const proc = spawn("node", ["dist"], {
+  const proc = spawnSync("node", ["dist"], {
     stdio: "inherit",
     env: {
       ...process.env,
