@@ -1,0 +1,9 @@
+{
+  "name": "ruby",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/TheRubyBot/Ruby",
+  "author": "Morgan Jones <me@morganuk.ga>",
+  "license": "MIT",
+  "private": true
+}
