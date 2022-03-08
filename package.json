@@ -1,17 +1,38 @@
 {
   "name": "ruby",
   "version": "1.0.0",
-  "revision": 97,
+  "revision": 111,
+  "codename": "Milky Way",
   "main": "dist/index.js",
-  "repository": "https://github.com/TheRubyBot/Ruby",
-  "author": "Morgan Jones <me@morganuk.ga>",
-  "license": "MIT",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Morgan Jones",
+    "email": "me@morganuk.ga",
+    "url": "https://morganuk.ga"
+  },
   "scripts": {
     "watch:dev": "node ./scripts/watch.mjs --dev",
-    "watch": "node ./scripts/watch.mjs"
+    "watch": "node ./scripts/watch.mjs",
+    "start": "node ./scripts/start.mjs"
+  },
+  "engines": {
+    "node": ">=0.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheRubyBot/Ruby"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.10.0",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "fs-extra": "^10.0.1",
+    "ora": "^5.0.0",
+    "prisma": "^3.10.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.13.0",
     "chalk": "^5.0.0",
@@ -23,12 +44,5 @@
     "prettier": "^2.5.1",
     "typescript": "^4.6.2",
     "typescript-eslint": "^0.0.1-alpha.0"
-  },
-  "dependencies": {
-    "@prisma/client": "^3.10.0",
-    "discord.js": "^13.6.0",
-    "dotenv": "^16.0.0",
-    "ora": "^5.0.0",
-    "prisma": "^3.10.0"
   }
 }
