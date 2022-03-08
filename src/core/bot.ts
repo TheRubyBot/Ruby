@@ -47,3 +47,5 @@ export class Bot implements IBot {
     return this.$prisma;
   }
 }
+
+export * from "./constructors/ApplicationCommandConstructor";
