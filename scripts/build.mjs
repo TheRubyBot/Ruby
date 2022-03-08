@@ -3,7 +3,6 @@ import { build as esbuild } from "esbuild"
 import { incrementRevision as incRev } from "./util/incrementRevision.mjs";
 import { tag } from "./util/createTag.mjs";
 import { existsSync, mkdirSync, rmSync } from "fs";
-import { esbuildPluginAliasPath } from "esbuild-plugin-alias-path";
 import { resolve } from "path";
 
 const basicEsbuildConfig = {
@@ -11,13 +10,6 @@ const basicEsbuildConfig = {
   format: "cjs",
   platform: "node",
   sourcemap: true,
-  plugins: [
-    esbuildPluginAliasPath({
-      alias: {
-        "$json/*": resolve(process.cwd(), "./json")
-      }
-    })
-  ],
 }
 
 export const rebuildWholeSrcFolder = async ({
