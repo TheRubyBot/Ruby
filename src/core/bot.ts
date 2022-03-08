@@ -28,6 +28,14 @@ export class Bot implements IBot {
 
     this.$client.on("ready", () => {
       this.clientSpinner.succeed(`Logged in as ${this.$client.user!.tag}`);
+
+      this.$client.user!.setPresence({
+        activities: [
+          {
+            name: `Using version ${this.version.string}`
+          }
+        ]
+      });
     });
 
     this.$prisma = new PrismaClient();
