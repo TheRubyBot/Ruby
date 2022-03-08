@@ -7,6 +7,8 @@ interface IBot {
   readonly $prisma: PrismaClient;
 
   login(token: string): Promise<Client | Error>;
+  get client(): Client;
+  get prisma(): PrismaClient;
 }
 
 export class Bot implements IBot {
@@ -39,5 +41,9 @@ export class Bot implements IBot {
 
   get client(): Client {
     return this.$client;
+  }
+
+  get prisma(): PrismaClient {
+    return this.$prisma;
   }
 }

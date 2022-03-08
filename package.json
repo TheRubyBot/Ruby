@@ -1,7 +1,7 @@
 {
   "name": "ruby",
   "version": "1.0.0",
-  "revision": 43,
+  "revision": 45,
   "main": "dist/index.js",
   "repository": "https://github.com/TheRubyBot/Ruby",
   "author": "Morgan Jones <me@morganuk.ga>",
