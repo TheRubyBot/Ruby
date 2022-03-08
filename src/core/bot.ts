@@ -1,10 +1,12 @@
 import { Client } from "discord.js";
 import ora, { Ora } from "ora";
 import { PrismaClient } from "@prisma/client";
+import getVersion, { IVersion } from "./util/getVersion";
 
 interface IBot {
   readonly $client: Client;
   readonly $prisma: PrismaClient;
+  readonly version: IVersion;
 
   login(token: string): Promise<Client | Error>;
   get client(): Client;
@@ -14,6 +16,7 @@ interface IBot {
 export class Bot implements IBot {
   $client;
   $prisma;
+  version = getVersion();
 
   private readonly clientSpinner: Ora = ora("Starting client...").start();
   private readonly prismaSpinner: Ora = ora("Starting prisma...").start();

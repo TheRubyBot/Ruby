@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/util/getVersion.ts"],
+  "sourcesContent": ["import { readJSONSync } from \"fs-extra\";\n\nexport interface IVersion {\n  major: number;\n  minor: number;\n  build: number;\n  revision: number;\n  codename: string;\n  string: string;\n}\n\nexport default (): IVersion => {\n  // Major.Minor.Build.Revision\n\n  const pjson = readJSONSync(\"package.json\");\n  const [major, minor, build] = pjson.version.split(\".\").map((x: string) => parseInt(x));\n  const { revision, codename } = pjson;\n  let versionString = `${major}.${minor}`;\n  if (build !== 0) versionString += `.${build}`;\n  if (process.env[\"NODE_ENV\"] === \"development\") versionString += `-rev${revision}`;\n\n  return {\n    major,\n    minor,\n    build,\n    revision,\n    codename,\n    string: versionString\n  };\n};\n"],
+  "mappings": "8gBAAA,oCAA6B,oBAWtB,EAAQ,IAAgB,CAG7B,KAAM,GAAQ,mBAAa,cAAc,EACnC,CAAC,EAAO,EAAO,GAAS,EAAM,QAAQ,MAAM,GAAG,EAAE,IAAI,AAAC,GAAc,SAAS,CAAC,CAAC,EAC/E,CAAE,WAAU,YAAa,EAC/B,GAAI,GAAgB,GAAG,KAAS,IAChC,MAAI,KAAU,GAAG,IAAiB,IAAI,KAClC,QAAQ,IAAI,WAAgB,eAAe,IAAiB,OAAO,KAEhE,CACL,QACA,QACA,QACA,WACA,WACA,OAAQ,CACV,CACF",
+  "names": []
+}
