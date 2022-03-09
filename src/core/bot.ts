@@ -2,6 +2,8 @@ import { Client } from "discord.js";
 import ora, { Ora } from "ora";
 import { PrismaClient } from "@prisma/client";
 import getVersion, { IVersion } from "./util/getVersion";
+import { join } from "path";
+import { readDir } from "./util/readDir";
 
 export class Bot implements IBot {
   $client;
@@ -41,6 +43,14 @@ export class Bot implements IBot {
     this.$eventsDir = eventsDir || this.$eventsDir;
     this.$devMode = devMode || this.$devMode;
 
+    if (require.main) {
+      const { path } = require.main;
+      if (path) {
+        this.$commandsDir = join(path, this.$commandsDir);
+        this.$eventsDir = join(path, this.$eventsDir);
+      }
+    }
+
     // Iterate through the owners array, fetch them and if they don't extst throw an error.
     for (const owner of owners) {
       this.$client.users.fetch(owner).catch(() => {
@@ -70,8 +80,6 @@ export class Bot implements IBot {
   }
 }
 
-export * from "./constructors/ApplicationCommandConstructor";
-
 interface IBot {
   readonly $client: Client;
   readonly $prisma: PrismaClient;
@@ -96,3 +104,5 @@ interface IBotConfig {
   owners: string[];
   devMode: boolean;
 }
+
+export * from "./constructors/ApplicationCommandConstructor";

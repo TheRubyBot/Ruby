@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": [],
-  "sourcesContent": [],
-  "mappings": "",
+  "sources": ["../../../src/core/util/readDir.ts"],
+  "sourcesContent": ["import { readdirSync } from \"fs-extra\";\nimport { join } from \"path\";\n\nexport const readDir = (path: string): string[] => {\n  const files = readdirSync(path, { withFileTypes: true }).filter(\n    (f) => f.name.endsWith(\".js\") && !f.name.startsWith(\".\")\n  );\n  let foundFiles: string[] = [];\n\n  for (const file of files)\n    if (file.isDirectory()) foundFiles = [...foundFiles, ...readDir(join(path, file.name))];\n    else if (file.isFile()) foundFiles.push(join(path, file.name));\n\n  return foundFiles;\n};\n"],
+  "mappings": "8gBAAA,oCAA4B,oBAC5B,EAAqB,gBAEd,KAAM,GAAU,AAAC,GAA2B,CACjD,KAAM,GAAQ,kBAAY,EAAM,CAAE,cAAe,EAAK,CAAC,EAAE,OACvD,AAAC,GAAM,EAAE,KAAK,SAAS,KAAK,GAAK,CAAC,EAAE,KAAK,WAAW,GAAG,CACzD,EACA,GAAI,GAAuB,CAAC,EAE5B,SAAW,KAAQ,GACjB,AAAI,EAAK,YAAY,EAAG,EAAa,CAAC,GAAG,EAAY,GAAG,EAAQ,WAAK,EAAM,EAAK,IAAI,CAAC,CAAC,EAC7E,EAAK,OAAO,GAAG,EAAW,KAAK,WAAK,EAAM,EAAK,IAAI,CAAC,EAE/D,MAAO,EACT",
   "names": []
 }
