@@ -3,7 +3,6 @@ import ora, { Ora } from "ora";
 import { PrismaClient } from "@prisma/client";
 import getVersion, { IVersion } from "./util/getVersion";
 import { join } from "path";
-import { readDir } from "./util/readDir";
 
 export class Bot implements IBot {
   $client;
@@ -24,16 +23,12 @@ export class Bot implements IBot {
       intents: ["GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS"]
     });
 
-    this.$client.on("ready", async () => {
-      this.clientSpinner.succeed(`Logged in as ${this.$client.user!.tag}`);
+    this.$prisma = new PrismaClient();
+    this.$prisma.$connect().then(() => this.prismaSpinner.succeed("Prisma ready"));
 
-      this.$client.user!.setPresence({
-        activities: [
-          {
-            name: `Using version ${this.version.string}`
-          }
-        ]
-      });
+    this.$client.on("ready", async () => {
+      this.setPresence();
+      this.clientSpinner.succeed(`Logged in as ${this.$client.user!.tag}`);
 
       await this.$client.application!.fetch();
       this.$owners.push(this.$client.application!.owner!.id);
@@ -41,40 +36,43 @@ export class Bot implements IBot {
 
     this.$commandsDir = commandsDir || this.$commandsDir;
     this.$eventsDir = eventsDir || this.$eventsDir;
+    this.correctPaths();
     this.$devMode = devMode || this.$devMode;
-
-    if (require.main) {
-      const { path } = require.main;
-      if (path) {
-        this.$commandsDir = join(path, this.$commandsDir);
-        this.$eventsDir = join(path, this.$eventsDir);
-      }
+    this.verifyOwners(owners);
+  }
+  private setPresence(): void {
+    this.$client.user!.setPresence({
+      activities: [
+        {
+          name: `Using version ${this.version.string}`
+        }
+      ]
+    });
+  }
+  private correctPaths(): void {
+    let path;
+    if (require.main && (path = require.main.path)) {
+      this.$commandsDir = join(path, this.$commandsDir);
+      this.$eventsDir = join(path, this.$eventsDir);
     }
-
-    // Iterate through the owners array, fetch them and if they don't extst throw an error.
+  }
+  private verifyOwners(owners: string[]): void {
     for (const owner of owners) {
       this.$client.users.fetch(owner).catch(() => {
         throw new Error(`Owner ${owner} does not exist.`);
       });
       this.$owners.push(owner);
     }
-
-    this.$prisma = new PrismaClient();
-
-    this.$prisma.$connect().then(() => this.prismaSpinner.succeed("Prisma ready"));
   }
-
   login(token: string): Promise<Client | Error> {
     return new Promise<Client | Error>((resolve, reject) => {
       this.$client.login(token).catch(reject);
       resolve(this.$client);
     });
   }
-
   get client(): Client {
     return this.$client;
   }
-
   get prisma(): PrismaClient {
     return this.$prisma;
   }
@@ -106,3 +104,4 @@ interface IBotConfig {
 }
 
 export * from "./constructors/ApplicationCommandConstructor";
+export * from "./constructors/OptionBuilder";

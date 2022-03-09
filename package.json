@@ -1,7 +1,7 @@
 {
   "name": "ruby",
   "version": "1.0.0",
-  "revision": 154,
+  "revision": 161,
   "codename": "Milky Way",
   "main": "dist/index.js",
   "private": true,
@@ -12,9 +12,9 @@
     "url": "https://morganuk.ga"
   },
   "scripts": {
-    "watch:dev": "node ./scripts/watch.mjs --dev",
     "watch": "node ./scripts/watch.mjs",
-    "start": "node ./scripts/start.mjs"
+    "start": "node ./scripts/start.mjs",
+    "build": "node ./scripts/build.mjs"
   },
   "engines": {
     "node": ">=0.16.0"
