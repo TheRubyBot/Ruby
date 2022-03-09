@@ -17,7 +17,7 @@ export default (): IVersion => {
   const { revision, codename, channel } = pjson;
   let versionString = `${major}.${minor}`;
   if (build !== 0) versionString += `.${build}`;
-  if (process.env["NODE_ENV"] === "DEVELOPMENT") versionString += `.${revision}-${channel}`;
+  if (process.env["NODE_ENV"] === "DEVELOPMENT") versionString += `.${revision}-dev`;
 
   return {
     major,
@@ -25,7 +25,7 @@ export default (): IVersion => {
     build,
     revision,
     codename,
-    channel,
+    channel: channel || "Release",
     string: versionString
   };
 };

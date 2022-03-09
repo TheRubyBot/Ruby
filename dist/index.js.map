@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../src/index.ts"],
-  "sourcesContent": ["import \"dotenv/config\";\nimport { Bot } from \"./core/bot\";\n\nconst bot: Bot = new Bot();\n\nbot.login(process.env[\"TOKEN\"] ?? \"\").catch((err) => console.error(err));\n"],
-  "mappings": "AAAA,MAAO,yBACP,EAAoB,sBADpB,EAGA,KAAM,GAAW,GAAI,OAErB,EAAI,MAAM,WAAQ,IAAI,QAAZ,OAAwB,EAAE,EAAE,MAAM,AAAC,GAAQ,QAAQ,MAAM,CAAG,CAAC",
+  "sourcesContent": ["import \"dotenv/config\";\nimport { Bot } from \"./core/bot\";\n\nconst bot: Bot = new Bot({\n  commandsDir: \"./commands\",\n  eventsDir: \"./events\",\n  owners: [],\n  devMode: true\n});\n\nbot.login(process.env[\"TOKEN\"] ?? \"\").catch((err) => console.error(err));\n"],
+  "mappings": "AAAA,MAAO,yBACP,EAAoB,sBADpB,EAGA,KAAM,GAAW,GAAI,OAAI,CACvB,YAAa,aACb,UAAW,WACX,OAAQ,CAAC,EACT,QAAS,EACX,CAAC,EAED,EAAI,MAAM,WAAQ,IAAI,QAAZ,OAAwB,EAAE,EAAE,MAAM,AAAC,GAAQ,QAAQ,MAAM,CAAG,CAAC",
   "names": []
 }

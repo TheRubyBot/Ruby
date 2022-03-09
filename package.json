@@ -1,8 +1,7 @@
 {
   "name": "ruby",
   "version": "1.0.0",
-  "channel": "Alpha",
-  "revision": 124,
+  "revision": 140,
   "codename": "Milky Way",
   "main": "dist/index.js",
   "private": true,

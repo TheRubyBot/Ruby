@@ -1,11 +1,13 @@
 import { spawnSync } from "child_process"
 
-export const start = (dev) => {
+export const start = () => {
+  const env = process.argv.includes("--dev") ? "DEVELOPMENT" : "PRODUCTION"
+  
   const proc = spawnSync("node", ["dist"], {
     stdio: "inherit",
     env: {
       ...process.env,
-      NODE_ENV: (process.argv.includes("--dev") || dev) ? "DEVELOPMENT" : "PRODUCTION",
+      NODE_ENV: env,
     }
   }) 
 
