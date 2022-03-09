@@ -3,6 +3,8 @@ import ora, { Ora } from "ora";
 import { PrismaClient } from "@prisma/client";
 import getVersion, { IVersion } from "./util/getVersion";
 import { join } from "path";
+import { readDir } from "./util/readDir";
+import { ApplicationCommandHandler } from "./handlers/ApplicationCommandHandler";
 
 export class Bot implements IBot {
   $client;
@@ -15,20 +17,26 @@ export class Bot implements IBot {
   $owners: string[] = [];
   $devMode = false;
 
-  private readonly clientSpinner: Ora = ora("Starting client...").start();
-  private readonly prismaSpinner: Ora = ora("Starting prisma...").start();
+  // Handlers
+  private readonly ApplicationCommands: ApplicationCommandHandler;
 
+  private readonly spinners: Record<string, Ora> = {
+    client: ora("Starting client...").start(),
+    prisma: ora("Starting prisma...").start(),
+    commands: ora("Loading commands..."),
+    events: ora("Loading events...")
+  };
   constructor({ commandsDir, eventsDir, owners, devMode }: IBotConfig) {
     this.$client = new Client({
       intents: ["GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS"]
     });
 
     this.$prisma = new PrismaClient();
-    this.$prisma.$connect().then(() => this.prismaSpinner.succeed("Prisma ready"));
+    this.$prisma.$connect().then(() => this.spinners.prisma.succeed("Prisma ready"));
 
     this.$client.on("ready", async () => {
       this.setPresence();
-      this.clientSpinner.succeed(`Logged in as ${this.$client.user!.tag}`);
+      this.spinners.client.succeed(`Logged in as ${this.$client.user!.tag}`);
 
       await this.$client.application!.fetch();
       this.$owners.push(this.$client.application!.owner!.id);
@@ -39,6 +47,11 @@ export class Bot implements IBot {
     this.correctPaths();
     this.$devMode = devMode || this.$devMode;
     this.verifyOwners(owners);
+
+    this.spinners.commands.start();
+    const commands = readDir(this.$commandsDir);
+    this.ApplicationCommands = new ApplicationCommandHandler(this.spinners, commands);
+    this.spinners.commands.succeed(`Loaded ${this.ApplicationCommands.commands.size} commands`);
   }
   private setPresence(): void {
     this.$client.user!.setPresence({

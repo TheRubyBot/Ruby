@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/core/handlers/ApplicationCommandHandler.ts"],
+  "sourcesContent": ["import { Ora } from \"ora\";\nimport { ApplicationCommand } from \"../bot\";\n\nexport class ApplicationCommandHandler {\n  public readonly commands: Map<string, ApplicationCommand> = new Map();\n\n  constructor(spinners: Record<string, Ora>, commandFiles: string[]) {\n    (async () => {\n      for (const file of commandFiles) {\n        let i = await import(file);\n        if (\"default\" in i) i = i.default;\n        else if (\"command\" in i) i = i.command;\n\n        if (\"options\" in i) this.commands.set(i.name, i);\n      }\n      spinners.commands.succeed(`Loaded ${this.commands.size} commands`);\n    })();\n  }\n}\n"],
+  "mappings": "2tBAAA,gDAGO,MAAM,CAA0B,CAGrC,YAAY,EAA+B,EAAwB,CAFnD,cAA4C,GAAI,KAG9D,AAAa,wBACX,SAAW,KAAQ,GAAc,CAC/B,GAAI,GAAI,KAAM,QAAO,GACrB,AAAI,WAAa,GAAG,EAAI,EAAE,QACjB,WAAa,IAAG,GAAI,EAAE,SAE3B,WAAa,IAAG,KAAK,SAAS,IAAI,EAAE,KAAM,CAAC,CACjD,CACA,EAAS,SAAS,QAAQ,UAAU,KAAK,SAAS,eAAe,CACnE,EACF,CACF",
+  "names": []
+}

@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../../src/commands/test.ts"],
-  "sourcesContent": ["import { ApplicationCommand } from \"../core/bot\";\n\nexport = new ApplicationCommand(\"hello\", \"This is a test command\", null, function () {\n  console.log(\"Hello World\");\n});\n"],
-  "mappings": "AAAA,MAAmC,uBAEnC,eAAS,GAAI,sBAAmB,QAAS,yBAA0B,KAAM,UAAY,CACnF,QAAQ,IAAI,aAAa,CAC3B,CAAC",
+  "sourcesContent": ["import { ApplicationCommand, OptionBuilder } from \"../core/bot\";\n\nexport = new ApplicationCommand(\n  \"hello\",\n  \"This is a test command\",\n  new OptionBuilder().string(\"helloworld\", \"eeee\"),\n  function () {\n    console.log(\"Hello World\");\n  }\n);\n"],
+  "mappings": "AAAA,MAAkD,uBAElD,eAAS,GAAI,sBACX,QACA,yBACA,GAAI,iBAAc,EAAE,OAAO,aAAc,MAAM,EAC/C,UAAY,CACV,QAAQ,IAAI,aAAa,CAC3B,CACF",
   "names": []
 }

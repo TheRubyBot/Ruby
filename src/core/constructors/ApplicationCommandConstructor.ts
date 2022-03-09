@@ -18,14 +18,12 @@ export class ApplicationCommand implements IApplicationCommand {
   constructor(
     public name: string,
     public description: string,
-    public options: OptionBuilder | Option[] | null,
+    public options: OptionBuilder | Option[],
     public callback: ApplicationCommandCallback
   ) {
     if (!name) throw new Error("Name of Application Commands are required");
     else if (!description)
       throw new Error(`Description of Application Command "${name}" is missing.`);
-    else if (!(options instanceof OptionBuilder) || !(options instanceof Option))
-      throw new Error(`Options of Application Command "${name}" is missing.`);
     else if ("options" in options) options = options.options;
   }
 }
